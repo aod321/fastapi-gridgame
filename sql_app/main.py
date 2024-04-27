@@ -1,11 +1,11 @@
 '''
 Here core functions are defined for different operations.
 '''
-from distutils.log import info
-from turtle import st
 from typing import Dict
 
 from fastapi import Depends, FastAPI, Request, Form, Body
+from fastapi.middleware.cors import CORSMiddleware
+
 from fastapi.templating import Jinja2Templates
 from sqlalchemy.orm import Session
 from fastapi.responses import JSONResponse
@@ -22,6 +22,15 @@ from .database import SessionLocal, engine
 models.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
+app.add_middleware(
+            CORSMiddleware,
+                allow_origins=["*"],
+                    allow_credentials=True,
+                        allow_methods=["*"],
+                            allow_headers=["*"],
+                            )
+
+
 
 templates = Jinja2Templates(directory="templates")
 
